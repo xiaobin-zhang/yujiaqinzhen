@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+		
+	<!-- 读取属性文件 -->
+	<bean id="env" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations" value="#{systemProperties['env.files'] ?: 'classpath:/dev/*.properties'}"/>
+	</bean>
+	<!-- 参数体系 -->
+	<bean class="net.engining.pg.param.sdk.LocalCachedParameterFacility"/>
+	
+	<!-- 批量及7x24支持 -->
+	<bean class="net.engining.pcx.cc.process.service.support.BatchProvider"/>
+
+	<!-- 所有业务组件 -->
+	<context:component-scan base-package="com.csii.bos.ib.batch"/>
+	
+	<context:component-scan base-package="com.csii.bos.ib.service.process"/>
+	<context:component-scan base-package="com.csii.bos.ib.business"/>
+	<context:component-scan base-package="net.engining.pcx.cc.batch"/>
+	<context:component-scan base-package="net.engining.pcx.cc.process.service"/>
+	<context:component-scan base-package="net.engining.pcx.gm">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<context:annotation-config/>
+	<!-- 数据库访问相关配置 -->
+	<import resource="jpa-context.xml"/>
+	<!-- RPC -->
+	<import resource="rpc-context.xml"/>
+	<!-- TG -->
+	<import resource="integration-context.xml"/>
+	
+	<!-- TODO isolation-level-for-create的问题，如果不指定DEFAULT会报错，因为JPADialet的问题，需要进一步研究 -->
+	<batch:job-repository id="jobRepository" isolation-level-for-create="DEFAULT" data-source="dataSource"/>
+
+	<!-- 这个jobLauncher是同步调用，是供CommandLineJobRunner使用的 -->
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+	</bean>
+
+	<bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
+	<bean class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
+		<property name="jobRegistry" ref="jobRegistry" />
+	</bean>
+	<bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<bean class="org.springframework.batch.core.launch.support.SimpleJobOperator">
+		<property name="jobRegistry" ref="jobRegistry"/>
+		<property name="jobLauncher" ref="jobLauncher"/>
+		<property name="jobExplorer" ref="jobExplorer"/>
+		<property name="jobRepository" ref="jobRepository"/>
+	</bean>
+	
+</beans>
