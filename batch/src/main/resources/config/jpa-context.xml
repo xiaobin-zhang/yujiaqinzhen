@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	<!-- 数据源 -->
+	<context:property-placeholder location="dev/dev.properties"/>
+	
+	<!-- 使用内存H2数据库作为数据源，数据库名为mem:dataSource,用户名sa，无密码，可以使用jdbc:h2:localhost:mem:dataSource;LOCK_MODE=0来连接。LOCK_MODE=0为指定脏读 -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactoryBean">
+		<property name="databaseName" value="dataSource"/>
+		<property name="databaseConfigurer">
+			<bean class="com.yjqz.binge.batch.xml.config.H2Config"/>
+		</property>
+	</bean>
+	
+    <bean class="org.springframework.jdbc.core.JdbcTemplate">	 
+ 		<property name="dataSource" ref="dataSource" /> 
+ 	</bean>
+ 	
+<!--     <bean id="h2tcp" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start" destroy-method="stop"> -->
+<!-- 		<constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9095" /> -->
+<!-- 	</bean>  -->
+	
+	<bean id="h2web" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop">
+		<constructor-arg value="-web,-webAllowOthers,-webPort,9093" />
+	</bean> 
+	
+	<jdbc:initialize-database data-source="dataSource">
+		<jdbc:script location="classpath:org/springframework/batch/core/schema-h2.sql"/>
+ 	</jdbc:initialize-database>
+	
+	<bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<description>
+			定义EntityManagerFactory，用于Spring控制事务。
+		</description>
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceUnitName" value="default" />
+		<property name="packagesToScan">
+			<list>
+				<value>com.yjqz.binge.batch.xml</value>
+			</list>
+		</property>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="true"/>
+				<property name="showSql" value="false"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    	<property name="entityManagerFactory" ref="emf"/>
+    </bean>
+</beans>
