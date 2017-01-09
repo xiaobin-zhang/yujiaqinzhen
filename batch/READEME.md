@@ -16,7 +16,10 @@
 ###高级特性
 1. Scope：secpe用来声明IOC容器中对象的存活空间，即在IOC容器在对象进入相应的Scope之前，生成并装配这些对象，在该对象不再处于这些Scope的限定范围之后，容器通常会销毁这些对象。
 2. Step Scope：是Spring Batch框架提供了自定义的Scope,将Spring Bean定义为Step Scope,支持Spring Bean在Step开始的时候初始化，在Step结束的时候销毁Spring Bean,将Spring Bean的生命周期与Step绑定。
-3. Late Bingding：后绑定技术，Spring Batch框架提供特定的表达式支持为Job或者Step关联的实体使用后绑定技术。在Step Scope中Spring Batch框架提供的可以使用的实体包括jobParameters、jobExecutionContext、stepExecutionContext。eg:#{jobParameters['inputResource']}。
+3. Late Bingding：后绑定技术，Spring Batch框架提供特定的表达式支持为Job或者Step关联的实体使用后绑定技术。在Step Scope中Spring Batch框架提供的可以使用的实体包括jobParameters、jobExecutionContext、stepExecutionContext。eg:<br>
+```
+	#{jobParameters['inputResource']}。
+```
 4. taskExecutor：默认情况下，JobLauncher的run操作通过同步方式调用Job,任何调用Job的客户端需要等待Job的执行结果返回才能结束。配置异步调用的JobLauncher只需要增加属性taskExecutor，该属性表示当前执行的线程池。
 eg:<br>
 
