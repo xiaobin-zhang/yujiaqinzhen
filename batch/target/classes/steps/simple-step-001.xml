@@ -5,9 +5,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd">
 
-	<bean id = "simpleReader" class="com.yjqz.binge.batch.xml.job001.Job01ItemReader"></bean>
-	<bean id = "simpleProcessor" class="com.yjqz.binge.batch.xml.job001.Job01ItemProcess"></bean>
-	<bean id = "simpleWriter" class="com.yjqz.binge.batch.xml.job001.Job01ItemWriter"></bean>
+	<bean id = "simpleReader" class="com.yjqz.binge.batch.xml.job001.Job01ItemReader" scope="step"></bean>
+	<bean id = "simpleProcessor" class="com.yjqz.binge.batch.xml.job001.Job01ItemProcess" scope="step"></bean>
+	<bean id = "simpleWriter" class="com.yjqz.binge.batch.xml.job001.Job01ItemWriter" scope="step"></bean>
 	
 	<batch:flow id="simple-flow-001" abstract="true">
 		<batch:step id="step-001">

@@ -9,12 +9,14 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd">
 
-	<import resource="steps/simple-step-001.xml" />
-	<bean id="simpleJobIncrementer" class="com.yjqz.binge.batch.xml.job001.SimpleJobIncrementer" scope="step"/>
+	<import resource="steps/partitioner-step-001.xml" />
+	<task:executor id="partitionerExecutor" pool-size="#{env['partitionerExecutor']?:20}" />
 	
-	<batch:job id="simpleJob" incrementer="simpleJobIncrementer">
+	<bean id="simpleJobIncrementer" class="com.yjqz.binge.batch.xml.job001.SimpleJobIncrementer"/>
+	
+	<batch:job id="partitionerJob" incrementer="simpleJobIncrementer">
 		
-		<batch:flow id="flow01" parent="simple-flow-001"/>
+		<batch:flow id="flow01" parent="partitinoer-flow-001"/>
 		
 	</batch:job>
 

@@ -1,4 +1,4 @@
-package com.yjqz.binge.batch.xml.job001;
+package com.yjqz.binge.batch.xml.job002;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,14 @@ import org.springframework.batch.item.ItemStreamReader;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
-
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+@Service
+@Scope("step")
 public class Job01ItemReader implements ItemStreamReader<List<String>>{
 
+	public List<String> parameters;
+	
 	/*
 	 * 关闭读取的资源。
 	 */
@@ -39,11 +44,18 @@ public class Job01ItemReader implements ItemStreamReader<List<String>>{
 	@Override
 	public List<String> read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 		List<String> strs = new ArrayList<String>();
-		strs.add("good");
-		strs.add("very good");
-		strs.add("very very good");
+		strs.add(Thread.currentThread().getName());
+		strs.add("key");
+		strs.add("gridSize");
+		strs.add("key & gridSize");
 		return strs;
 	}
 
+	public List<String> getParameters() {
+		return parameters;
+	}
 
+	public void setParameters(List<String> parameters) {
+		this.parameters = parameters;
+	}
 }
