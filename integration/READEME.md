@@ -6,16 +6,19 @@
 2. Channel
 3. Message EndPoint
 
-##知识点详解
+---
 
-1. Message:用来在不同部分之间传递数据。Message由两部分组成：消息体(payload)和消息头(header)。消息体可以是任何数据类型(XML、JSON、Java对象)；消息头表示的元素就是解释消息体的内容。<br>	
+##知识点详解：
+.**Message**: 用来在不同部分之间传递数据。Message由两部分组成：消息体(payload)和消息头(header)。消息体可以是任何数据类型(XML、JSON、Java对象)；消息头表示的元素就是解释消息体的内容.	
+
 ```
 			pulic interface Message<T> {
 				T getPayload();
 				MessageHeaders getHeaders();
 			}
 ```
-2. Channel:在消息体统中，消息发送者发送消息到通道(Channel)，消息收受者从通道(Channel)接收消息。MessageChannel是SpringIntegration消息通道的顶级接口。当使用send方法发送消息时。返回值为true,表示消息发送成功。MessageChannel有两大子接口，分别是PollableChannel(可轮询)和SubscribableChannel(可订阅)。我们所有的消息通道类型都是实现这两个接口。<br>
+
+.**Channel**: 在消息体统中，消息发送者发送消息到通道(Channel)，消息收受者从通道(Channel)接收消息。MessageChannel是SpringIntegration消息通道的顶级接口。当使用send方法发送消息时。返回值为true,表示消息发送成功。MessageChannel有两大子接口，分别是PollableChannel(可轮询)和SubscribableChannel(可订阅)。我们所有的消息通道类型都是实现这两个接口。<br>
 ```
 			public interface MessageChannel {
 				public static long INDEFINITE_TIMEOUT = -1;
@@ -23,7 +26,6 @@
 				boolean send(Message<?> message, long timeout);
 			}
 ```
-
 > 常用消息通道：
 >> (1) PublishSubscribeChannel:允许广播消息给所有的订阅者。
 ```
@@ -74,7 +76,6 @@
 				ExecutorChannel channel = new ExecutorChannel(executor());
 				return channel;
 			}
-			
 			@Bean
 			public Executor executor() {
 				ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
@@ -86,14 +87,6 @@
 			}
 ```
 
-3. Message EndPoint:消息端点，真正处理消息的组件，还可以控制通道的路由。
+.**Message EndPoint**: 消息端点，真正处理消息的组件，还可以控制通道的路由。
 
->(1) Channel Adapter
-
-
-
-			
-
-
-
-
+> (1) Channel Adapter:通道通道适配器，是一种连接外部系统或传输协议的端点(EndPoint)，可以分为入站(inbound)和出站(outbound)。它是单向的，inbound只支持接收消息，outbound只支持输出消息。
