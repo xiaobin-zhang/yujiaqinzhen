@@ -26,6 +26,7 @@
     <module>thread</module>
     <module>scheduled</module>
     <module>batch</module>
+    <module>integration</module>
   </modules>
   
   <dependencyManagement>
