@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Implementation-Vendor: Pivotal Software, Inc.
 Implementation-Title: ￥ﾤﾚ￧ﾺ﾿￧ﾨﾋ
 Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: zhangxiaobin
 Implementation-Vendor-Id: com.yjqz.binge
-Build-Jdk: 1.7.0_45
-Built-By: Administrator
-Created-By: Maven Integration for Eclipse
+Build-Jdk: 1.8.0_77
 Implementation-URL: http://projects.spring.io/spring-boot/yujiaqinzhen
  .binge/thread/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
 
