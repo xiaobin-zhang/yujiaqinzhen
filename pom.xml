@@ -27,6 +27,7 @@
     <module>scheduled</module>
     <module>batch</module>
     <module>integration</module>
+    <module>collection</module>
   </modules>
   
   <dependencyManagement>
