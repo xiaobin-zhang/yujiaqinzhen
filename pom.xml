@@ -28,6 +28,7 @@
     <module>batch</module>
     <module>integration</module>
     <module>collection</module>
+    <module>io</module>
   </modules>
   
   <dependencyManagement>
