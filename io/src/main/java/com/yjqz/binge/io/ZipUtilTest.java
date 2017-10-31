@@ -26,9 +26,9 @@ public class ZipUtilTest {
 	@Test
 	public void mainjiami() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException{
 		String desKey = "abcdefgh12348765hgfedcba";
-		String zipFileName = "C:\\Users\\zhangxiaobin\\Desktop\\temp\\B_CBIB_REPAY_FQL_FqlCCPay_20171031_02.zip";
+		String zipFileName = "C:\\Users\\zhangxiaobin\\Desktop\\temp\\a.zip";
 		String zipEntryStr = " ";
-		String fileName = "C:\\Users\\zhangxiaobin\\Desktop\\temp\\B_CBIB_REPAY_FQL_FqlCCPay_20171031_02.txt";
+		String fileName = "C:\\Users\\zhangxiaobin\\Desktop\\temp\\a.txt";
 		jiamijiaya(desKey, zipFileName, zipEntryStr, fileName);
 	}
 	@Test
