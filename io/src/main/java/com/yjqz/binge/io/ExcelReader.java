@@ -102,7 +102,7 @@ public class ExcelReader {
 	@Test
 	public void test() throws IOException {
 		File file = new File("C:\\Users\\zhangxiaobin\\Desktop\\temp\\未逾期.xlsx");
-		File targetFile = new File("C:\\Users\\zhangxiaobin\\Desktop\\temp\\B_CBIB_REPAY_FQL_FqlCCPay_20171031_02.txt");
+		File targetFile = new File("C:\\Users\\zhangxiaobin\\Desktop\\temp\\a.txt");
 		FileInputStream is = new FileInputStream(file);
 		boolean isExcel2003 = false;
 		List<String> excelInfo = this.getExcelInfo(is, isExcel2003);
