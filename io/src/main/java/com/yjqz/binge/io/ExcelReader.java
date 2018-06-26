@@ -19,19 +19,24 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
 
+/**
+ * Excel文件读取.
+ * @author zhangxiaobin
+ *
+ */
 public class ExcelReader {
 	
 	/**
-	 * 总行数
+	 * 总行数.
 	 */
 	private int rows;
 	
 	/**
-	 * 总列数
+	 * 总列数.
 	 */
 	private int cells;
 	
-	private List<String> getExcelInfo(InputStream is,boolean isExcel2003) {
+	private List<String> getExcelInfo(InputStream is, boolean isExcel2003) {
 		List<String> list = null;
 		Workbook wb = null;
 		try {
@@ -52,7 +57,7 @@ public class ExcelReader {
 		Sheet sheet = wb.getSheetAt(0);
 		//获取总行数
 		this.rows = sheet.getPhysicalNumberOfRows();
-		if (rows >0 && sheet.getRow(0) != null) {
+		if (this.rows > 0 && sheet.getRow(0) != null) {
 			//获取总列数
 			this.cells = sheet.getRow(0).getPhysicalNumberOfCells();
 		}

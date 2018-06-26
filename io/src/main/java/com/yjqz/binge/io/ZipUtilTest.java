@@ -22,9 +22,14 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
+/**
+ * 文件压缩.
+ * @author zhangxiaobin
+ *
+ */
 public class ZipUtilTest {
 	@Test
-	public void mainjiami() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException{
+	public void mainjiami() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException {
 		String desKey = "abcdefgh12348765hgfedcba";
 		String zipFileName = "C:\\Users\\zhangxiaobin\\Desktop\\temp\\a.zip";
 		String zipEntryStr = " ";
@@ -32,14 +37,14 @@ public class ZipUtilTest {
 		jiamijiaya(desKey, zipFileName, zipEntryStr, fileName);
 	}
 	@Test
-	public void mainjiemi() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException{
+	public void mainjiemi() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException {
 		String desKey = "123456788765432112345678";
 		String zipFileName = "G:\\hesthhh\\xrfOut\\RESP_B_CBIB0022_XRF_20160906_001.zip";
 		String fileName = "G:\\hesthhh\\xrfOut\\RESP_B_CBIB0022_XRF_20160906_001";
 		jiemijiaya(desKey, zipFileName, fileName);
 	}
 	
-	public void jiamijiaya(String desKey,String zipFileName, String zipEntryStr, String fileName ){
+	public void jiamijiaya(String desKey, String zipFileName, String zipEntryStr, String fileName) {
 		OutputStream outputStream = null;
 		FileOutputStream fileOutputStream = null;
 		FileInputStream fileInputStream = null;
@@ -65,13 +70,13 @@ public class ZipUtilTest {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			try {
-				if(outputStream != null){
+				if (outputStream != null) {
 					outputStream.close();
-				}else if (fileInputStream != null) {
+				} else if (fileInputStream != null) {
 					fileInputStream.close();
-				}else if (fileOutputStream != null) {
+				} else if (fileOutputStream != null) {
 					fileOutputStream.close();
 				}
 			} catch (IOException e) {
@@ -79,7 +84,7 @@ public class ZipUtilTest {
 			}
 		}
 	}
-	public void jiemijiaya(String desKey,String zipFileName,String fileName ){
+	public void jiemijiaya(String desKey, String zipFileName, String fileName) {
 		InputStream inputStream = null;
 		FileInputStream fileInputStream = null;
 		FileOutputStream fileOutputStream = null;
@@ -88,7 +93,7 @@ public class ZipUtilTest {
 			SecretKey keySpec = new SecretKeySpec(desKey.getBytes(), "DESede");
 			Cipher cipher = Cipher.getInstance("DESede");
 			cipher.init(Cipher.DECRYPT_MODE, keySpec);
-			InputStream cipherInputStream = new CipherInputStream(fileInputStream,cipher);
+			InputStream cipherInputStream = new CipherInputStream(fileInputStream, cipher);
 			ZipInputStream zipInputStream = new ZipInputStream(cipherInputStream);
 			ZipEntry nextEntry = zipInputStream.getNextEntry();
 			inputStream = zipInputStream;
@@ -108,13 +113,13 @@ public class ZipUtilTest {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			try {
-				if(inputStream != null){
+				if (inputStream != null) {
 					inputStream.close();
-				}else if (fileInputStream != null) {
+				} else if (fileInputStream != null) {
 					fileInputStream.close();
-				}else if (fileOutputStream != null) {
+				} else if (fileOutputStream != null) {
 					fileOutputStream.close();
 				}
 			} catch (IOException e) {
