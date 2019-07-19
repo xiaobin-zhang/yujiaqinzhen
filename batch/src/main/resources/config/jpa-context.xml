@@ -30,12 +30,12 @@
  		<property name="dataSource" ref="dataSource" /> 
  	</bean>
  	
-<!--     <bean id="h2tcp" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start" destroy-method="stop"> -->
-<!-- 		<constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9095" /> -->
+<!-- 	<bean id="h2web" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop"> -->
+<!-- 		<constructor-arg value="-web,-webAllowOthers,-webPort,9093" /> -->
 <!-- 	</bean>  -->
 	
-	<bean id="h2web" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop">
-		<constructor-arg value="-web,-webAllowOthers,-webPort,9093" />
+	 <bean id="h2tcp" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start" destroy-method="stop">
+		<constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9092" />
 	</bean> 
 	
 	<jdbc:initialize-database data-source="dataSource">
@@ -50,13 +50,13 @@
 		<property name="persistenceUnitName" value="default" />
 		<property name="packagesToScan">
 			<list>
-				<value>com.yjqz.binge.batch.xml</value>
+				<value>com.yjqz.binge.batch.xml.domain</value>
 			</list>
 		</property>
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<property name="generateDdl" value="true"/>
-				<property name="showSql" value="false"/>
+				<property name="showSql" value="true"/>
 			</bean>
 		</property>
 	</bean>

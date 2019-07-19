@@ -3,6 +3,8 @@ package com.yjqz.binge.batch.xml.job001;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemStreamException;
 import org.springframework.batch.item.ItemStreamReader;
@@ -12,6 +14,8 @@ import org.springframework.batch.item.UnexpectedInputException;
 
 public class Job01ItemReader implements ItemStreamReader<List<String>>{
 
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
 	/*
 	 * 关闭读取的资源。
 	 */
@@ -38,10 +42,12 @@ public class Job01ItemReader implements ItemStreamReader<List<String>>{
 
 	@Override
 	public List<String> read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+		logger.info("reader");
+		System.out.println("reader");
 		List<String> strs = new ArrayList<String>();
-		strs.add("good");
-		strs.add("very good");
-		strs.add("very very good");
+		strs.add("1");
+		strs.add("2");
+		strs.add("3");
 		return strs;
 	}
 

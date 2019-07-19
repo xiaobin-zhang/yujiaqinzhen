@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd">
 
 	<import resource="steps/simple-step-001.xml" />
-	<bean id="simpleJobIncrementer" class="com.yjqz.binge.batch.xml.job001.SimpleJobIncrementer" scope="step"/>
+	<bean id="simpleJobIncrementer" class="com.yjqz.binge.batch.xml.job001.SimpleJobIncrementer"/>
 	
 	<batch:job id="simpleJob" incrementer="simpleJobIncrementer">
 		
