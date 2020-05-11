@@ -39,8 +39,8 @@ public class ZipUtilTest {
 	@Test
 	public void mainjiemi() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException {
 		String desKey = "123456788765432112345678";
-		String zipFileName = "G:\\hesthhh\\xrfOut\\RESP_B_CBIB0022_XRF_20160906_001.zip";
-		String fileName = "G:\\hesthhh\\xrfOut\\RESP_B_CBIB0022_XRF_20160906_001";
+		String zipFileName = "G:\\hesthhh\\xrfOut\\aaa.zip";
+		String fileName = "G:\\hesthhh\\xrfOut\\aaa";
 		jiemijiaya(desKey, zipFileName, fileName);
 	}
 	
