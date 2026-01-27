@@ -9,6 +9,7 @@ public class AsyncTaskService {
 	@Async
 	public void executeAsyncTask(Integer i) {
 		System.out.println("执行异步任务: " + i);
+		System.out.println("这是github上的代码");
 	}
 	
 	@Async
