@@ -14,6 +14,7 @@ public class TaskExecutorConfig implements AsyncConfigurer {
 
 	@Override
 	public Executor getAsyncExecutor() {
+		System.out.println("初始化线程池");
 		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
 		taskExecutor.setCorePoolSize(5);
 		taskExecutor.setMaxPoolSize(10);
@@ -23,3 +24,4 @@ public class TaskExecutorConfig implements AsyncConfigurer {
 	}
 
 }
+
